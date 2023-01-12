@@ -9,7 +9,7 @@ dotenv.config({ path: "./config.env" });
 //   '<PASSWORD>',
 //   process.env.DATABASE_PASSWORD
 // );
-
+mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.DATABASE_LOCAL as string)
   .then(() => console.log("DB connection successful!"));

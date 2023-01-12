@@ -42,12 +42,14 @@ const Modal: React.FunctionComponent<{
         status: status,
       };
 
-      API.post("tasks", data, config).then((res) => {
-        if (res.data.status === "success") {
-          setRerender(res.data);
-          closeModal(false);
-        }
-      });
+      API.post("tasks", data, config)
+        .then((res) => {
+          if (res.data.status === "success") {
+            setRerender(res.data);
+            closeModal(false);
+          }
+        })
+        .catch((err) => console.log(err));
     },
   });
   return (

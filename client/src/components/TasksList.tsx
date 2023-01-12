@@ -30,19 +30,19 @@ const TasksList: React.FunctionComponent<{
       .catch((err) => console.log(err));
   };
 
-  const ondragstart = (e: any) => {
-    const id = e.target.dataset.id;
-    console.log(id);
+  const ondragstart = (e: React.DragEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    const id = target.dataset.id as string;
     e.dataTransfer.setData("text/plain", id);
     e.dataTransfer.effectAllowed = "move";
   };
 
-  const onDragOver = (e: any) => {
+  const onDragOver = (e: React.DragEvent<HTMLElement>) => {
     e.stopPropagation();
     e.preventDefault();
   };
 
-  const onDrop = (e: any) => {
+  const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const id: string = e.dataTransfer.getData("text/plain");
 
@@ -71,7 +71,7 @@ const TasksList: React.FunctionComponent<{
         >
           Create new Task
         </button>
-        {todoList.map((el: TodoTaskType) => {
+        {todoList.map((el) => {
           if (title.toLowerCase() === el.status) {
             return (
               <div

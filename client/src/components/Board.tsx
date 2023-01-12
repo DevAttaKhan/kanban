@@ -5,7 +5,6 @@ import API from "../api/api";
 
 const Board = () => {
   const { setTasks, token, tasks, rerender } = useContext(AppState);
-  //   const [tasks, setTasks] = useState<TodoTasksType[]>([]);
 
   useEffect(() => {
     API.get("tasks", {
