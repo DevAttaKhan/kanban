@@ -14,7 +14,10 @@ const validationSchema = Yup.object().shape({
   dueDate: Yup.date().required(),
 });
 
-const Modal = ({ closeModal, status }: any) => {
+const Modal: React.FunctionComponent<{
+  closeModal: React.Dispatch<React.SetStateAction<boolean>>;
+  status: string;
+}> = ({ closeModal, status }) => {
   const { token, setRerender } = useContext(AppState);
   const formik = useFormik({
     initialValues: {
@@ -25,12 +28,17 @@ const Modal = ({ closeModal, status }: any) => {
     onSubmit: (values) => {
       let config = {
         headers: {
-          Authorization: "Bearer " + token.token,
+          Authorization: "Bearer " + token!.token,
         },
       };
-      const data: Record<string, string> = {
+      const data: {
+        description: string;
+        userId: string | undefined;
+        status: string;
+        dueDate: string;
+      } = {
         ...values,
-        userId: token.user._id,
+        userId: token?.user._id,
         status: status,
       };
 
@@ -45,7 +53,7 @@ const Modal = ({ closeModal, status }: any) => {
   return (
     <Portal>
       <div
-        onClick={() => closeModal()}
+        onClick={() => closeModal(false)}
         className="overlay w-full h-full  absolute  inset-0 bg-opacity-20 bg-black "
       >
         <div

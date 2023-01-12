@@ -3,16 +3,12 @@ import { AppState } from "../AppContext";
 import Modal from "../components/Modal";
 import API from "../api/api";
 
-export interface TodoTaskType {
-  _id: string;
-  userId: string;
-  description: string;
-  status: string;
-  dueDate: string;
-  __v: number;
-}
+import { TodoTaskType } from "../models/typeModels";
 
-const TasksList = ({ todoList, title }: any) => {
+const TasksList: React.FunctionComponent<{
+  todoList: TodoTaskType[];
+  title: string;
+}> = ({ todoList, title }) => {
   const { token, setRerender } = useContext(AppState);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -22,7 +18,7 @@ const TasksList = ({ todoList, title }: any) => {
       { status: status },
       {
         headers: {
-          authorization: `Bearer ${token.token}`,
+          authorization: `Bearer ${token?.token}`,
         },
       }
     )

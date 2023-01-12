@@ -1,54 +1,27 @@
-import react, { useState, useEffect } from "react";
-import API from "./api/api";
+import react, { useState } from "react";
+import { ContextType, APIResponse, TodoTaskType } from "./models/typeModels";
 
-export interface APIResponse {
-  status: string;
-  token: string;
-  data: Data;
-}
+export const AppState = react.createContext<ContextType>({
+  token: null,
+  tasks: [],
+  rerender: {},
+  setTasks: () => {},
+  setToken: () => {},
+  setRerender: () => {},
+});
 
-export interface Data {
-  user: User;
-}
-
-export interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  __v: number;
-}
-
-interface AppContextProps {
-  children: React.ReactNode;
-}
-
-interface ContextType {
-  token?: APIResponse;
-  setToken: (token: APIResponse) => void;
-}
-
-export interface TodoTaskType {
-  _id: string;
-  userId: string;
-  description: string;
-  status: string;
-  dueDate: string;
-  __v: number;
-}
-
-export const AppState = react.createContext<any | null>(null);
-
-const AppContext = (props: AppContextProps) => {
-  const [token, setToken] = useState<APIResponse | undefined>();
+const AppContext: React.FunctionComponent<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [token, setToken] = useState<APIResponse | null>(null);
   const [tasks, setTasks] = useState<TodoTaskType[]>([]);
   const [rerender, setRerender] = useState({});
 
   return (
     <AppState.Provider
-      value={{ token: token, setToken, tasks, setTasks, rerender, setRerender }}
+      value={{ token, setToken, tasks, setTasks, rerender, setRerender }}
     >
-      {props.children}
+      {children}
     </AppState.Provider>
   );
 };

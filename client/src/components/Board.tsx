@@ -1,17 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import TasksList from "./TasksList";
 import { AppState } from "../AppContext";
 import API from "../api/api";
-// import { TodoTaskType } from "./TasksList";
-
-// export interface TodoTasksType {
-//   _id: string;
-//   userId: string;
-//   description: string;
-//   status: string;
-//   dueDate: string;
-//   __v: number;
-// }
 
 const Board = () => {
   const { setTasks, token, tasks, rerender } = useContext(AppState);
@@ -20,10 +10,10 @@ const Board = () => {
   useEffect(() => {
     API.get("tasks", {
       headers: {
-        authorization: `Bearer ${token.token}`,
+        authorization: `Bearer ${token?.token}`,
       },
     }).then(({ data }) => setTasks(data.data.tasks));
-  }, [token.token, rerender, setTasks]);
+  }, [token?.token, rerender, setTasks]);
 
   return (
     <div className="flex">
