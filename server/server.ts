@@ -5,13 +5,13 @@ import app from "./app";
 
 dotenv.config({ path: "./config.env" });
 
-// const DB = process.env.DATABASE_LOCAL?.replace(
-//   '<PASSWORD>',
-//   process.env.DATABASE_PASSWORD
-// );
+const DB = process.env.DATABASE?.replace(
+  "<PASSWORD>",
+  process.env.DATABASE_PASSWORD as string
+);
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(process.env.DATABASE_LOCAL as string)
+  .connect(DB as string)
   .then(() => console.log("DB connection successful!"));
 
 const port = process.env.PORT || 3000;

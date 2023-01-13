@@ -26,12 +26,14 @@ const LoginForm = () => {
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      API.post("user/login", { ...values }).then((res) => {
-        setToken(res.data);
-        if (res.data.status === "success") {
-          navigate("/");
-        }
-      });
+      API.post("user/login", { ...values })
+        .then((res) => {
+          setToken(res.data);
+          if (res.data.status === "success") {
+            navigate("/");
+          }
+        })
+        .catch((err) => alert("login faild"));
     },
   });
 
